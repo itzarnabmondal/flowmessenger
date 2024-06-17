@@ -28,4 +28,4 @@ FlowMessenger is a web-based messaging application designed for portability, sec
 If you would like to contribute or have any suggestions, please feel free to contact me at arnabmondal@onmail.com :)
 
 ## 📌
-Thank you for checking out FlowMessenger! Your privacy and security are my top priorities. Stay tuned for more updates as i continue to develop and improve this application.
+Thank you for checking out FlowMessenger! Stay tuned for more updates as i continue to develop and improve this application.
