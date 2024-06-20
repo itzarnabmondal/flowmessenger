@@ -6,11 +6,11 @@ FlowMessenger is a web-based messaging application designed for portability, sec
 
 ## Features
 - **Portability**: Single executable `.jar` file for easy deployment.
-- **Security**: 
-  - No personal identifiable information required (only first name and username for sign-up).
+- **Security**:
   - Secure storage of passwords and recovery keys using advanced salting and hashing techniques.
   - Encryption of messages and files before storage.
-- **Privacy**: 
+- **Privacy**:
+  - No personal identifiable information required (only first name and username for sign-up).
   - No tracking of users.
   - No collection of logs or telemetry data.
 
