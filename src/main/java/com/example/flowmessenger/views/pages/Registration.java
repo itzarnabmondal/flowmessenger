@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -94,7 +93,7 @@ public class Registration extends Div {
                                   String originalFileName) throws IOException {
         String sanitizedFileName = sanitizeFileName(originalFileName);
         String userHome = System.getProperty("user.home");
-        Path profilePhotosDir = Paths.get(userHome, "flowmessenger", "profile-photos");
+        Path profilePhotosDir = Path.of(userHome, "flowmessenger", "profile-photos");
         if (!Files.exists(profilePhotosDir)) {
             Files.createDirectories(profilePhotosDir);
         }
