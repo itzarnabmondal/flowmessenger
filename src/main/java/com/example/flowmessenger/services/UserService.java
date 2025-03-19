@@ -33,4 +33,9 @@ public class UserService {
         userRepo.save(user);
     }
 
+    // Check if the username is already taken
+    public boolean isUsernameTaken(String username) {
+        return userRepo.existsByUsername(username);
+    }
+
 }

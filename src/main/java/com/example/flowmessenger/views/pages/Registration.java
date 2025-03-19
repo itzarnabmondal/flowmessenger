@@ -2,9 +2,9 @@ package com.example.flowmessenger.views.pages;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 
+import com.example.flowmessenger.services.RegistrationService;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -23,8 +23,20 @@ import com.vaadin.flow.router.Route;
 @Route("registration")
 public class Registration extends Div {
 
+    private TextField firstName;
+    private TextField lastName;
     private FileBuffer fileBuffer;
     private Upload avatarUpload;
+    private TextField username;
+    private PasswordField passwordOne;
+    private PasswordField passwordTwo;
+    private Button submit;
+
+    private String firstNameValue;
+    private String lastNameValue;
+    private String usernameValue;
+    private String passwordOneValue;
+    private String passwordTwoValue;
 
     public Registration() {
         setSizeFull();
@@ -34,9 +46,9 @@ public class Registration extends Div {
 
     private VerticalLayout getRegistrationForm() {
         var title = new H2("Create Account");
-        var firstName = new TextField("First Name");
+        firstName = new TextField("First Name");
         firstName.setWidth("320px");
-        var lastName = new TextField("Last Name");
+        lastName = new TextField("Last Name");
         lastName.setWidth("320px");
         fileBuffer = new FileBuffer();
         avatarUpload = new Upload(fileBuffer);
@@ -48,24 +60,25 @@ public class Registration extends Div {
             FileData savedFileData = fileBuffer.getFileData();
             File uploadedFile = savedFileData.getFile();
             try {
-                Path targetFilePath = saveUploadedFile(uploadedFile, event.getFileName());
+                Path targetFilePath = RegistrationService.saveUploadedFile(uploadedFile, event.getFileName());
                 Notification.show("File saved to: " + targetFilePath.toAbsolutePath());
             } catch (IOException e) {
 
                 Notification.show("Error saving file: " + e.getMessage(), 3000, Notification.Position.MIDDLE);
             }
         });
-        var username = new TextField("Username");
+        username = new TextField("Username");
         username.setWidth("320px");
-        var passwordOne = new PasswordField("Enter password");
+        passwordOne = new PasswordField("Enter password");
         passwordOne.setWidth("320px");
-        var passwordTwo = new PasswordField("Confirm password");
+        passwordTwo = new PasswordField("Confirm password");
         passwordTwo.setWidth("320px");
-        var submit = new Button("Submit");
+        submit = new Button("Submit");
         submit.setWidth("144px");
         submit.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         submit.addClickListener(click -> {
             // TODO
+            loadDataFromForm();
         });
         var close = new Button("Close");
         close.addClickListener(click -> {
@@ -89,33 +102,12 @@ public class Registration extends Div {
         return layout;
     }
 
-    private Path saveUploadedFile(File uploadedFile,
-                                  String originalFileName) throws IOException {
-        String sanitizedFileName = sanitizeFileName(originalFileName);
-        String userHome = System.getProperty("user.home");
-        Path profilePhotosDir = Path.of(userHome, "flowmessenger", "profile-photos");
-        if (!Files.exists(profilePhotosDir)) {
-            Files.createDirectories(profilePhotosDir);
-        }
-        Path targetFilePath = profilePhotosDir.resolve(sanitizedFileName);
-        int counter = 1;
-        while (Files.exists(targetFilePath)) {
-            String newFileName = getNewFileName(sanitizedFileName, counter);
-            targetFilePath = profilePhotosDir.resolve(newFileName);
-            counter++;
-        }
-        Files.move(uploadedFile.toPath(), targetFilePath);
-        return targetFilePath;
-    }
-
-    private String sanitizeFileName(String originalFileName) {
-        return originalFileName.replaceAll("[^a-zA-Z0-9.-]", "_");
-    }
-
-    private String getNewFileName(String originalFileName, int counter) {
-        String fileNameWithoutExtension = originalFileName.replaceFirst("[.][^.]+$", "");
-        String extension = originalFileName.substring(originalFileName.lastIndexOf('.'));
-        return fileNameWithoutExtension + "_" + counter + extension;
+    public void loadDataFromForm() {
+        firstNameValue = firstName.getValue();
+        lastNameValue = lastName.getValue();
+        usernameValue = username.getValue();
+        passwordOneValue = passwordOne.getValue();
+        passwordTwoValue = passwordTwo.getValue();
     }
 
 }

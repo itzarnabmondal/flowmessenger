@@ -17,7 +17,7 @@ public final class Generator {
     private static final String RECOVERY_KEY_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
             + "0123456789";
 
-    public static char[] generate(String input) {
+    private static char[] generate(String input) {
         var random = new SecureRandom();
         char[] key = new char[KEY_SIZE];
         for (int i = 0; i < KEY_SIZE; i++) {
@@ -29,6 +29,14 @@ public final class Generator {
         } finally {
             key = null;
         }
+    }
+
+    public static char[] generateSalt() {
+        return generate(SALT_STRING);
+    }
+
+    public static char[] generateRecoveryKey() {
+        return generate(RECOVERY_KEY_STRING);
     }
 
 }

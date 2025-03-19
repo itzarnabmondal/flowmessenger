@@ -1,7 +1,12 @@
 package com.example.flowmessenger.models;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
+
+@Table("User")
 public class User {
 
+    @Id
     private Long id;
     private String firstName;
     private String lastName;
