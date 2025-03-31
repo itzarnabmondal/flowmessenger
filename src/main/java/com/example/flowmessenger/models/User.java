@@ -2,7 +2,9 @@ package com.example.flowmessenger.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.stereotype.Component;
 
+@Component
 @Table("User")
 public class User {
 
@@ -19,26 +21,6 @@ public class User {
 //    private boolean hasMFA;
 //    private char[] pinHash;
 //    private boolean isOnline;
-//    private long lastSeen;
-
-    public User() {}
-
-    public User(String firstName,
-                String lastName,
-                String avatarPath,
-                String username,
-                char[] salt,
-                char[] passwordHash,
-                char[] recoveryKeyHash) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.avatarPath = avatarPath;
-        this.username = username;
-        this.salt = salt;
-        this.passwordHash = passwordHash;
-        this.recoveryKeyHash = recoveryKeyHash;
-        createdAt = System.currentTimeMillis();
-    }
 
     public Long getId() {
         return id;
