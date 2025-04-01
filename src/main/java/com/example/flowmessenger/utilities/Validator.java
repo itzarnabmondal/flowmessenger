@@ -5,17 +5,17 @@ import com.vaadin.flow.component.notification.Notification;
 
 public class Validator {
 
-    private String namePattern = "^[A-Za-z]{2,25}$";
-    private String usernamePattern = "^[A-Za-z0-9]{3,20}$";
-    private String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,32}$";
+    private static String namePattern = "^[A-Za-z]{2,25}$";
+    private static String usernamePattern = "^[A-Za-z0-9]{3,20}$";
+    private static String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,32}$";
 
-    private UserService userService;
+    private static UserService userService;
 
     public Validator(UserService userService) {
         this.userService = userService;
     }
 
-    public boolean validateRegistrationForm(String firstNameValue, String lastNameValue, String usernameValue, String passwordOneValue, String passwordTwoValue) {
+    public static boolean validateRegistrationForm(String firstNameValue, String lastNameValue, String usernameValue, String passwordOneValue, String passwordTwoValue) {
 
         // Validate first name
         if (!firstNameValue.matches(namePattern)) {
