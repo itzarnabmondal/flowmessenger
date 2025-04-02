@@ -12,10 +12,9 @@ import java.util.Iterator;
 
 public class ImageCompressor {
 
-
     public static void compressImage(String inputImagePath,
-                                     String outputImagePath,
-                                     float compressionQuality) throws IOException {
+            String outputImagePath,
+            float compressionQuality) throws IOException {
         File inputFile = new File(inputImagePath);
         BufferedImage image = ImageIO.read(inputFile);
         Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpg");
@@ -24,8 +23,7 @@ public class ImageCompressor {
         }
         ImageWriter writer = writers.next();
         ImageOutputStream ios = ImageIO.createImageOutputStream(
-                new File(outputImagePath)
-        );
+                new File(outputImagePath));
         writer.setOutput(ios);
         ImageWriteParam param = writer.getDefaultWriteParam();
         if (param.canWriteCompressed()) {

@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import com.example.flowmessenger.services.UserService;
+import com.example.flowmessenger.services.StorageService;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -64,8 +64,9 @@ public class Registration extends Div {
             FileData savedFileData = fileBuffer.getFileData();
             File uploadedFile = savedFileData.getFile();
             try {
-                Path targetFilePath = UserService.saveUploadedFile(uploadedFile, event.getFileName());
+                Path targetFilePath = StorageService.saveUploadedFile(uploadedFile, event.getFileName());
                 Notification.show("File saved to: " + targetFilePath.toAbsolutePath());
+                Notification.show(targetFilePath.getFileName().toString());
             } catch (IOException e) {
 
                 Notification.show("Error saving file: " + e.getMessage(), 3000, Notification.Position.MIDDLE);
