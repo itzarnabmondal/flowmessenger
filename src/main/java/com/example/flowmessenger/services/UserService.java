@@ -1,7 +1,5 @@
 package com.example.flowmessenger.services;
 
-import java.nio.file.Path;
-
 import org.springframework.stereotype.Service;
 
 import com.example.flowmessenger.models.User;
@@ -23,10 +21,10 @@ public class UserService {
         this.userRepo = userRepo;
     }
 
-    public boolean register(String firstName, String lastName, Path avatarPath, String username, String password) {
+    public boolean register(String firstName, String lastName, String avatarPath, String username, String password) {
         user.setFirstName(firstName);
         user.setLastName(lastName);
-        user.setAvatarPath(avatarPath.toString());
+        user.setAvatarPath(avatarPath);
         user.setUsername(username);
         user.setSalt(Generator.generateSalt());
         user.setPasswordHash(SHA3Hasher.getSHA3(password.toCharArray(), user.getSalt()));

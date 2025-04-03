@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 import com.example.flowmessenger.services.StorageService;
+import com.example.flowmessenger.services.UserService;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -34,12 +35,16 @@ public class Registration extends Div {
 
     private String firstNameValue;
     private String lastNameValue;
+    private String tempAvatarPath;
     private String usernameValue;
     private String passwordValue;
 
-    public Registration() {
-        setSizeFull();
+    private UserService userService;
 
+    public Registration(UserService userService) {
+        this.userService = userService;
+
+        setSizeFull();
         add(getRegistrationForm());
     }
 
@@ -65,8 +70,8 @@ public class Registration extends Div {
             File uploadedFile = savedFileData.getFile();
             try {
                 Path targetFilePath = StorageService.saveUploadedFile(uploadedFile, event.getFileName());
-                Notification.show("File saved to: " + targetFilePath.toAbsolutePath());
-                Notification.show(targetFilePath.getFileName().toString());
+                tempAvatarPath = targetFilePath.toAbsolutePath().toString();
+
             } catch (IOException e) {
 
                 Notification.show("Error saving file: " + e.getMessage(), 3000, Notification.Position.MIDDLE);
@@ -82,13 +87,15 @@ public class Registration extends Div {
         password.setAllowedCharPattern("^(?!.*\\s)[a-zA-Z0-9!@#$%^&*()_+={}|:;,.<>?/-]*$");
         password.setMinLength(8);
         password.setMaxLength(32);
-        password.setHelperText("Password must contain at least one uppercase letter, one lowercase letter, one number, one special character and be between 8-32 characters long.");
+        password.setHelperText(
+                "Password must contain at least one uppercase letter, one lowercase letter, one number, one special character and be between 8-32 characters long.");
         submit = new Button("Submit");
         submit.setWidth("144px");
         submit.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         submit.addClickListener(click -> {
             // TODO
             loadDataFromForm();
+            userService.register(firstNameValue, lastNameValue, tempAvatarPath, usernameValue, passwordValue);
         });
         var close = new Button("Close");
         close.addClickListener(click -> {
